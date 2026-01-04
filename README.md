@@ -2,7 +2,7 @@
 
 ## Intro
 
-This application transforms person data from an input HTML format to a canonical (standardized) format. Users can upload HTML files containing person records, and the application will parse, transform, and generate output HTML files in the canonical format.
+This application transforms html from an input HTML format to a canonical (standardised) format. Users can upload HTML files containing a record, and the application will parse, transform, and generate output HTML files in the canonical format.
 
 ## File Structure
 
@@ -31,4 +31,4 @@ transcribe/
 - [ ] Add validation for input data
 - [ ] Add error handling improvements
 - [ ] Add unit tests
-
+- [ ] Wrap this with a desktop application framework like Electron and Tauri. 
