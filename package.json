@@ -1,0 +1,14 @@
+{
+  "name": "canonical-model-transformation",
+  "version": "0.1.0",
+  "description": "Canonical Model Transformation Architecture application",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}
+
