@@ -4,76 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Canonical Model Transformation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    h1 {
-      color: #333;
-    }
-    .upload-section {
-      margin-bottom: 30px;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    input[type="file"] {
-      margin-bottom: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-    #downloadButton {
-      display: none;
-      margin-top: 10px;
-      background-color: #28a745;
-    }
-    #downloadButton:hover {
-      background-color: #218838;
-    }
-    #error {
-      display: none;
-      color: red;
-      margin-top: 10px;
-      padding: 10px;
-      background-color: #ffe6e6;
-      border: 1px solid #ff9999;
-      border-radius: 4px;
-    }
-    #output {
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="dist/styles.css">
 </head>
 <body>
-  <h1>Canonical Model Transformation Architecture</h1>
-  
-  <div class="upload-section">
-    <h2>Upload Input File</h2>
-    <input type="file" id="fileInput" accept=".html,.htm">
-    <br>
-    <button id="uploadButton">Process File</button>
-    <button id="downloadButton">Download Output</button>
-    <div id="error"></div>
+  <div class="container">
+    <header class="header">
+      <div class="logo-container">
+        <img src="assets/logos/Hoplite_logo_unoffical.png" alt="Hoplite Logo" class="header-logo">
+        <img src="assets/logos/cci.png" alt="CCI Logo" class="header-logo">
+      </div>
+      <div class="header-content">
+        <h1 class="header-title">Report Converter</h1>
+        <p class="header-subtitle">Transform HTML records from input format to canonical format</p>
+      </div>
+    </header>
+    
+    <div class="upload-section custom-card">
+      <h2>Upload Input File</h2>
+      <input type="file" id="fileInput" accept=".html,.htm">
+      <div style="margin-top: var(--spacing-md);">
+        <button id="uploadButton" class="btn-primary">Process File</button>
+        <button id="downloadButton" class="btn-success" style="display: none; margin-left: var(--spacing-sm);">Download Output</button>
+      </div>
+      <div id="error" class="error-message"></div>
+    </div>
+    
+    <div id="output"></div>
   </div>
-  
-  <div id="output"></div>
   
   <script type="module" src="dist/main.js"></script>
 </body>

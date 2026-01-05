@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if a file was actually selected
     if (!selectedFile) {
       errorDiv.textContent = 'Please select a file';
-      errorDiv.style.display = 'block';
+      errorDiv.classList.add('show');
       return;
     }
     
@@ -79,9 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Display the output in an iframe so the user can preview it
         const previewIframe = document.createElement('iframe');
-        previewIframe.style.width = '100%';
-        previewIframe.style.height = '600px';
-        previewIframe.style.border = '1px solid #ccc';
+        previewIframe.className = 'output-preview';
         
         // Clear any previous output
         outputDiv.innerHTML = '';
@@ -92,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         previewIframe.srcdoc = outputHTML;
         
         // Hide any previous errors and show the download button
-        errorDiv.style.display = 'none';
+        errorDiv.classList.remove('show');
         downloadButton.style.display = 'block';
       } catch (error) {
         // If something goes wrong, show an error message
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         errorDiv.textContent = `Error processing file: ${errorMessage}`;
-        errorDiv.style.display = 'block';
+        errorDiv.classList.add('show');
         outputDiv.innerHTML = '';
         downloadButton.style.display = 'none';
       }
@@ -107,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // This runs if there's an error reading the file
     fileReader.onerror = () => {
       errorDiv.textContent = 'Error reading file';
-      errorDiv.style.display = 'block';
+      errorDiv.classList.add('show');
     };
     
     // Start reading the file as text

@@ -12,17 +12,19 @@
  * Example:
  * {
  *   givenName: "Alice",
- *   sirname: "Smith",
+ *   surname: "Smith",
  *   dateOfBirth: "12 April 1988"
  * }
  */
 export interface CanonicalPerson {
   /** The person's first name */
   givenName: string;
-  /** The person's last name (spelled "sirname" in the canonical format) */
-  sirname: string;
+  /** The person's last name */
+  surname: string;
   /** Date of birth formatted as "DD Month YYYY" (e.g., "12 April 1988") */
   dateOfBirth: string;
+  /** Warnings about missing or problematic fields */
+  warnings?: string[];
 }
 
 /**

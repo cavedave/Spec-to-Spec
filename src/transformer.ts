@@ -4,7 +4,7 @@ import { InputPerson, CanonicalPerson } from './types.js';
  * This file handles transforming input data into the canonical format.
  * 
  * The transformation includes:
- * 1. Mapping field names (firstName -> givenName, familyName -> sirname)
+ * 1. Mapping field names (firstName -> givenName, familyName -> surname)
  * 2. Transforming date format (YYYY-MM-DD -> "DD Month YYYY")
  */
 
@@ -58,16 +58,25 @@ function transformDate(dateStr: string): string {
  * @returns The person data in canonical format
  */
 export function transformToCanonical(input: InputPerson): CanonicalPerson {
+  const warnings: string[] = [];
+  
+  // Check if DOB is missing
+  if (!input.dob || input.dob.trim() === '') {
+    warnings.push('Date of birth (DOB) field is missing or could not be parsed from the input.');
+  }
+  
   return {
     // Map "firstName" from input to "givenName" in canonical format
     givenName: input.firstName || '',
     
-    // Map "familyName" from input to "sirname" in canonical format
-    // Note: "sirname" is the spelling used in the canonical format
-    sirname: input.familyName || '',
+    // Map "familyName" from input to "surname" in canonical format
+    surname: input.familyName || '',
     
     // Transform the date format if a date exists, otherwise use empty string
-    dateOfBirth: input.dob ? transformDate(input.dob) : ''
+    dateOfBirth: input.dob ? transformDate(input.dob) : '',
+    
+    // Include warnings if any
+    warnings: warnings.length > 0 ? warnings : undefined
   };
 }
 

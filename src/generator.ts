@@ -4,7 +4,7 @@ import { CanonicalPerson } from './types.js';
  * This file handles generating the output HTML file from canonical person data.
  * 
  * The output HTML follows the same structure as the input, but with:
- * - Canonical field names (Given Name, Sirname, Date of birth)
+ * - Canonical field names (Given Name, Surname, Date of birth)
  * - Transformed date format
  * - Audit information (hashes and version)
  */
@@ -83,6 +83,23 @@ export function generateOutputHTML(
   // Version of the converter (increment this when you make changes)
   const converterVersion = '0.1.0';
   
+  // Check if DOB is missing
+  const isDobMissing = !canonical.dateOfBirth || canonical.dateOfBirth.trim() === '';
+  const dobFieldClass = isDobMissing ? 'field field-warning' : 'field';
+  const dobLabelClass = isDobMissing ? 'label label-warning' : 'label';
+  
+  // Build warnings HTML if any
+  let warningsHTML = '';
+  if (canonical.warnings && canonical.warnings.length > 0) {
+    warningsHTML = `
+  <div class="warning-box">
+    <strong>⚠️ Warnings:</strong>
+    <ul>
+      ${canonical.warnings.map(warning => `<li>${escapeHtml(warning)}</li>`).join('')}
+    </ul>
+  </div>`;
+  }
+  
   // Build the HTML string using a template
   // We use escapeHtml() on all user data to prevent HTML injection
   return `<!doctype html>
@@ -96,24 +113,50 @@ export function generateOutputHTML(
     .field { margin: 12px 0; }
     .label { font-weight: 700; }
     .value { margin-left: 8px; color: #222; }
+    .field-warning { border: 2px solid #dc3545; border-radius: 4px; padding: 8px; background-color: #fff5f5; }
+    .label-warning { 
+      color: #dc3545; 
+      animation: flash 1s ease-in-out infinite;
+    }
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .warning-box {
+      background-color: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 4px;
+      padding: 16px;
+      margin: 20px 0;
+      color: #856404;
+    }
+    .warning-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    .warning-box ul {
+      margin: 8px 0 0 0;
+      padding-left: 20px;
+    }
   </style>
 </head>
 <body>
   <h1>Person Record (Output)</h1>
-
+${warningsHTML}
   <div class="field">
     <span class="label">Given Name</span>
     <span class="value">${escapeHtml(canonical.givenName)}</span>
   </div>
 
   <div class="field">
-    <span class="label">Sirname</span>
-    <span class="value">${escapeHtml(canonical.sirname)}</span>
+    <span class="label">Surname</span>
+    <span class="value">${escapeHtml(canonical.surname)}</span>
   </div>
 
-  <div class="field">
-    <span class="label">Date of birth</span>
-    <span class="value">${escapeHtml(canonical.dateOfBirth)}</span>
+  <div class="${dobFieldClass}">
+    <span class="${dobLabelClass}">Date of birth</span>
+    <span class="value">${escapeHtml(canonical.dateOfBirth || '(Missing)')}</span>
   </div>
 
   <p>Audit: input_hash: <em>sha256:${inputHash}</em> · output_hash: <em>sha256:${outputHash}</em></p>

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Canonical Model Transformation Architecture application",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/styles.css dist/styles.css",
+    "build:standalone": "npm run build && node build-standalone.js",
     "watch": "tsc --watch",
     "serve": "python3 -m http.server 8000"
   },

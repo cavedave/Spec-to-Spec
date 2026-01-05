@@ -1,0 +1,478 @@
+/**
+ * Professional Styling System
+ * Based on the styling guide, adapted for HTML/TypeScript projects
+ */
+
+/* ============================================
+   CSS Custom Properties (Color System)
+   ============================================ */
+:root {
+  /* Primary Colors */
+  --primary: #1f77b4;
+  --primary-dark: #0d5a8a;
+  --primary-light: #4a9bd4;
+  
+  /* Secondary Colors */
+  --secondary: #ff7f0e;
+  --accent: #2ca02c;
+  
+  /* Special Colors */
+  --ai-color: #6f42c1;
+  --human-color: #20c997;
+  
+  /* Neutral Colors */
+  --background: #ffffff;
+  --surface: #f8f9fa;
+  --text: #212529;
+  --text-light: #6c757d;
+  --border: #dee2e6;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text);
+  background-color: var(--background);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+  color: var(--primary);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+  color: var(--primary-dark);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+  color: var(--primary);
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 250px 1fr 250px;
+  align-items: center;
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--border);
+  gap: var(--spacing-xl);
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  grid-column: 1;
+}
+
+.header-logo {
+  max-height: 120px;
+  max-width: 250px;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  transition: opacity var(--transition-base);
+}
+
+.header-logo:hover {
+  opacity: 0.8;
+}
+
+.header-content {
+  grid-column: 2;
+  text-align: center;
+}
+
+.header-title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.header-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-light);
+  margin: 0;
+}
+
+/* ============================================
+   Component: Custom Card
+   ============================================ */
+.custom-card {
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--transition-base);
+}
+
+.custom-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.custom-card h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ============================================
+   Component: Upload Section
+   ============================================ */
+.upload-section {
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.upload-section h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   Component: Buttons
+   ============================================ */
+button {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+button:disabled {
+  background-color: var(--text-light);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+}
+
+.btn-success {
+  background-color: var(--accent);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #238a23;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #e66a00;
+}
+
+/* ============================================
+   Component: File Input
+   ============================================ */
+input[type="file"] {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  border: 2px dashed var(--border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--background);
+  cursor: pointer;
+  transition: border-color var(--transition-base);
+  width: 100%;
+  max-width: 400px;
+}
+
+input[type="file"]:hover {
+  border-color: var(--primary);
+}
+
+input[type="file"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(31, 119, 180, 0.1);
+}
+
+/* ============================================
+   Component: Error Message
+   ============================================ */
+.error-message {
+  display: none;
+  color: #dc3545;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.error-message.show {
+  display: block;
+}
+
+/* ============================================
+   Component: Success Message
+   ============================================ */
+.success-message {
+  display: none;
+  color: #155724;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.success-message.show {
+  display: block;
+}
+
+/* ============================================
+   Component: Output Preview
+   ============================================ */
+#output {
+  margin-top: var(--spacing-xl);
+}
+
+.output-preview {
+  width: 100%;
+  min-height: 600px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  background: var(--background);
+}
+
+/* ============================================
+   Component: Result Container
+   ============================================ */
+.result-container {
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.prediction-result {
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ============================================
+   Component: Author Styling
+   ============================================ */
+.ai-author {
+  color: var(--ai-color);
+  font-weight: 600;
+}
+
+.human-author {
+  color: var(--human-color);
+  font-weight: 600;
+}
+
+/* ============================================
+   Component: Metrics
+   ============================================ */
+.metric-container {
+  text-align: center;
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--border-radius-md);
+  margin: var(--spacing-sm);
+}
+
+.metric-value {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.metric-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-md);
+  }
+  
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .header {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .logo-container {
+    grid-column: 1;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+  
+  .header-content {
+    grid-column: 1;
+  }
+  
+  .header-logo {
+    max-height: 80px;
+    max-width: 200px;
+  }
+  
+  .upload-section {
+    padding: var(--spacing-md);
+  }
+  
+  .custom-card {
+    padding: var(--spacing-md);
+  }
+  
+  button {
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  input[type="file"] {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-light);
+}
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.hidden {
+  display: none !important;
+}
+

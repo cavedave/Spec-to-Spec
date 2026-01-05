@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canonical Model Transformation</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <style>
+/**
+ * Professional Styling System
+ * Based on the styling guide, adapted for HTML/TypeScript projects
+ */
+
+/* ============================================
+   CSS Custom Properties (Color System)
+   ============================================ */
+:root {
+  /* Primary Colors */
+  --primary: #1f77b4;
+  --primary-dark: #0d5a8a;
+  --primary-light: #4a9bd4;
+  
+  /* Secondary Colors */
+  --secondary: #ff7f0e;
+  --accent: #2ca02c;
+  
+  /* Special Colors */
+  --ai-color: #6f42c1;
+  --human-color: #20c997;
+  
+  /* Neutral Colors */
+  --background: #ffffff;
+  --surface: #f8f9fa;
+  --text: #212529;
+  --text-light: #6c757d;
+  --border: #dee2e6;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text);
+  background-color: var(--background);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+  color: var(--primary);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+  color: var(--primary-dark);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+  color: var(--primary);
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 250px 1fr 250px;
+  align-items: center;
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--border);
+  gap: var(--spacing-xl);
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  grid-column: 1;
+}
+
+.header-logo {
+  max-height: 120px;
+  max-width: 250px;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  transition: opacity var(--transition-base);
+}
+
+.header-logo:hover {
+  opacity: 0.8;
+}
+
+.header-content {
+  grid-column: 2;
+  text-align: center;
+}
+
+.header-title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.header-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-light);
+  margin: 0;
+}
+
+/* ============================================
+   Component: Custom Card
+   ============================================ */
+.custom-card {
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--transition-base);
+}
+
+.custom-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.custom-card h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ============================================
+   Component: Upload Section
+   ============================================ */
+.upload-section {
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.upload-section h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   Component: Buttons
+   ============================================ */
+button {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+button:disabled {
+  background-color: var(--text-light);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+}
+
+.btn-success {
+  background-color: var(--accent);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #238a23;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #e66a00;
+}
+
+/* ============================================
+   Component: File Input
+   ============================================ */
+input[type="file"] {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  border: 2px dashed var(--border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--background);
+  cursor: pointer;
+  transition: border-color var(--transition-base);
+  width: 100%;
+  max-width: 400px;
+}
+
+input[type="file"]:hover {
+  border-color: var(--primary);
+}
+
+input[type="file"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(31, 119, 180, 0.1);
+}
+
+/* ============================================
+   Component: Error Message
+   ============================================ */
+.error-message {
+  display: none;
+  color: #dc3545;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.error-message.show {
+  display: block;
+}
+
+/* ============================================
+   Component: Success Message
+   ============================================ */
+.success-message {
+  display: none;
+  color: #155724;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.success-message.show {
+  display: block;
+}
+
+/* ============================================
+   Component: Output Preview
+   ============================================ */
+#output {
+  margin-top: var(--spacing-xl);
+}
+
+.output-preview {
+  width: 100%;
+  min-height: 600px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  background: var(--background);
+}
+
+/* ============================================
+   Component: Result Container
+   ============================================ */
+.result-container {
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.prediction-result {
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ============================================
+   Component: Author Styling
+   ============================================ */
+.ai-author {
+  color: var(--ai-color);
+  font-weight: 600;
+}
+
+.human-author {
+  color: var(--human-color);
+  font-weight: 600;
+}
+
+/* ============================================
+   Component: Metrics
+   ============================================ */
+.metric-container {
+  text-align: center;
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--border-radius-md);
+  margin: var(--spacing-sm);
+}
+
+.metric-value {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.metric-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-md);
+  }
+  
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .header {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .logo-container {
+    grid-column: 1;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+  
+  .header-content {
+    grid-column: 1;
+  }
+  
+  .header-logo {
+    max-height: 80px;
+    max-width: 200px;
+  }
+  
+  .upload-section {
+    padding: var(--spacing-md);
+  }
+  
+  .custom-card {
+    padding: var(--spacing-md);
+  }
+  
+  button {
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  input[type="file"] {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-light);
+}
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.hidden {
+  display: none !important;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo-container">
+        <img src="assets/logos/Hoplite_logo_unoffical.png" alt="Hoplite Logo" class="header-logo">
+        <img src="assets/logos/cci.png" alt="CCI Logo" class="header-logo">
+      </div>
+      <div class="header-content">
+        <h1 class="header-title">Report Converter</h1>
+        <p class="header-subtitle">Transform HTML records from input format to canonical format</p>
+      </div>
+    </header>
+    
+    <div class="upload-section custom-card">
+      <h2>Upload Input File</h2>
+      <input type="file" id="fileInput" accept=".html,.htm">
+      <div style="margin-top: var(--spacing-md);">
+        <button id="uploadButton" class="btn-primary">Process File</button>
+        <button id="downloadButton" class="btn-success" style="display: none; margin-left: var(--spacing-sm);">Download Output</button>
+      </div>
+      <div id="error" class="error-message"></div>
+    </div>
+    
+    <div id="output"></div>
+  </div>
+  
+  <script>
+
+// Parser
+/**
+ * This file handles parsing the input HTML file to extract person data.
+ *
+ * The input HTML is expected to have a structure like:
+ *   <div class="field">
+ *     <span class="label">First name</span>
+ *     <span class="value">Alice</span>
+ *   </div>
+ */
+/**
+ * Parses an HTML string and extracts person data from it.
+ *
+ * Looks for elements with class "field" that contain:
+ * - A label element (class "label") that identifies the field
+ * - A value element (class "value") that contains the actual data
+ *
+ * Maps the labels to our InputPerson structure:
+ * - "First name" -> firstName
+ * - "Family name" -> familyName
+ * - "Dob" -> dob
+ *
+ * @param html - The HTML content to parse
+ * @returns An InputPerson object with the extracted data
+ */
+function parseInputHTML(html) {
+    // Create a parser to convert the HTML string into a DOM document
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    // Start with an empty person object
+    const person = {};
+    // Find all divs with class "field" - these contain our data
+    const fieldDivs = doc.querySelectorAll('.field');
+    // Go through each field div and extract the label and value
+    fieldDivs.forEach(fieldDiv => {
+        // Find the label element (tells us what field this is)
+        const labelElement = fieldDiv.querySelector('.label');
+        // Find the value element (contains the actual data)
+        const valueElement = fieldDiv.querySelector('.value');
+        // Only process if both label and value exist
+        if (labelElement && valueElement) {
+            // Get the text content and remove extra whitespace
+            const labelText = labelElement.textContent?.trim() || '';
+            const valueText = valueElement.textContent?.trim() || '';
+            // Map the label text to our InputPerson fields
+            // We use toLowerCase() to handle variations like "First Name" vs "first name"
+            if (labelText.toLowerCase() === 'first name') {
+                person.firstName = valueText;
+            }
+            else if (labelText.toLowerCase() === 'family name') {
+                person.familyName = valueText;
+            }
+            else if (labelText.toLowerCase() === 'dob') {
+                person.dob = valueText;
+            }
+        }
+    });
+    return person;
+}
+
+
+// Transformer  
+/**
+ * This file handles transforming input data into the canonical format.
+ *
+ * The transformation includes:
+ * 1. Mapping field names (firstName -> givenName, familyName -> surname)
+ * 2. Transforming date format (YYYY-MM-DD -> "DD Month YYYY")
+ */
+/**
+ * Transforms a date string from YYYY-MM-DD format to "DD Month YYYY" format.
+ *
+ * Example: "1988-04-12" becomes "12 April 1988"
+ *
+ * @param dateStr - Date in YYYY-MM-DD format (e.g., "1988-04-12")
+ * @returns Date in "DD Month YYYY" format (e.g., "12 April 1988")
+ */
+function transformDate(dateStr) {
+    try {
+        // Add 'T00:00:00' to avoid timezone issues when parsing the date
+        // Without this, the date might shift by a day depending on timezone
+        const date = new Date(dateStr + 'T00:00:00');
+        // Extract the day of the month (1-31)
+        const day = date.getDate();
+        // Array of month names in English
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        // Get the month name (getMonth() returns 0-11, so we use it as an array index)
+        const month = monthNames[date.getMonth()];
+        // Extract the full year (e.g., 1988)
+        const year = date.getFullYear();
+        // Combine into the desired format: "DD Month YYYY"
+        return `${day} ${month} ${year}`;
+    }
+    catch (error) {
+        // If something goes wrong parsing the date, just return the original string
+        // This prevents the whole transformation from failing due to a bad date
+        return dateStr;
+    }
+}
+/**
+ * Transforms input person data into the canonical format.
+ *
+ * This function:
+ * 1. Maps field names from input format to canonical format
+ * 2. Transforms the date format if a date is present
+ * 3. Handles missing fields by using empty strings
+ *
+ * @param input - The input person data extracted from HTML
+ * @returns The person data in canonical format
+ */
+function transformToCanonical(input) {
+    const warnings = [];
+    // Check if DOB is missing
+    if (!input.dob || input.dob.trim() === '') {
+        warnings.push('Date of birth (DOB) field is missing or could not be parsed from the input.');
+    }
+    return {
+        // Map "firstName" from input to "givenName" in canonical format
+        givenName: input.firstName || '',
+        // Map "familyName" from input to "surname" in canonical format
+        surname: input.familyName || '',
+        // Transform the date format if a date exists, otherwise use empty string
+        dateOfBirth: input.dob ? transformDate(input.dob) : '',
+        // Include warnings if any
+        warnings: warnings.length > 0 ? warnings : undefined
+    };
+}
+
+
+// Generator
+/**
+ * This file handles generating the output HTML file from canonical person data.
+ *
+ * The output HTML follows the same structure as the input, but with:
+ * - Canonical field names (Given Name, Surname, Date of birth)
+ * - Transformed date format
+ * - Audit information (hashes and version)
+ */
+/**
+ * Generates a simple hash from a string for audit purposes.
+ *
+ * This is a simplified hash function for demonstration. In a production
+ * system, you might use a proper cryptographic hash like SHA-256.
+ *
+ * @param content - The string to hash
+ * @returns A hexadecimal hash string
+ */
+function generateHash(content) {
+    // Start with hash value of 0
+    let hash = 0;
+    // Go through each character in the string
+    for (let i = 0; i < content.length; i++) {
+        const charCode = content.charCodeAt(i);
+        // Simple hash algorithm: multiply by 31 and add the character code
+        // The bit shift (<< 5) is equivalent to multiplying by 32
+        hash = ((hash << 5) - hash) + charCode;
+        // Convert to 32-bit integer (keeps the hash from getting too large)
+        hash = hash & hash;
+    }
+    // Convert to positive number, then to hexadecimal, and take first 16 characters
+    return Math.abs(hash).toString(16).substring(0, 16);
+}
+/**
+ * Escapes HTML special characters to prevent injection and display issues.
+ *
+ * Converts characters like <, >, &, ", ' into their HTML entity equivalents
+ * so they display correctly and safely in the browser.
+ *
+ * @param text - The text to escape
+ * @returns The text with HTML special characters escaped
+ */
+function escapeHtml(text) {
+    // Map of special characters to their HTML entity equivalents
+    const htmlEntities = {
+        '&': '&amp;', // Must be first to avoid double-escaping
+        '<': '&lt;', // Less than
+        '>': '&gt;', // Greater than
+        '"': '&quot;', // Double quote
+        "'": '&#039;' // Single quote (apostrophe)
+    };
+    // Replace any special characters with their HTML entities
+    return text.replace(/[&<>"']/g, (character) => htmlEntities[character]);
+}
+/**
+ * Generates the output HTML file from canonical person data.
+ *
+ * Creates an HTML document that:
+ * 1. Displays the person data in canonical format
+ * 2. Includes audit information (hashes of input and output)
+ * 3. Shows the converter version
+ *
+ * @param canonical - The person data in canonical format
+ * @param inputHTML - The original input HTML (used for audit hash)
+ * @returns The complete output HTML as a string
+ */
+function generateOutputHTML(canonical, inputHTML) {
+    // Generate hashes for audit trail
+    // These help verify the input and output haven't been tampered with
+    const inputHash = generateHash(inputHTML);
+    const outputHash = generateHash(JSON.stringify(canonical));
+    // Version of the converter (increment this when you make changes)
+    const converterVersion = '0.1.0';
+    // Check if DOB is missing
+    const isDobMissing = !canonical.dateOfBirth || canonical.dateOfBirth.trim() === '';
+    const dobFieldClass = isDobMissing ? 'field field-warning' : 'field';
+    const dobLabelClass = isDobMissing ? 'label label-warning' : 'label';
+    // Build warnings HTML if any
+    let warningsHTML = '';
+    if (canonical.warnings && canonical.warnings.length > 0) {
+        warningsHTML = `
+  <div class="warning-box">
+    <strong>⚠️ Warnings:</strong>
+    <ul>
+      ${canonical.warnings.map(warning => `<li>${escapeHtml(warning)}</li>`).join('')}
+    </ul>
+  </div>`;
+    }
+    // Build the HTML string using a template
+    // We use escapeHtml() on all user data to prevent HTML injection
+    return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Output Example — Converted HTML</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; }
+    .field { margin: 12px 0; }
+    .label { font-weight: 700; }
+    .value { margin-left: 8px; color: #222; }
+    .field-warning { border: 2px solid #dc3545; border-radius: 4px; padding: 8px; background-color: #fff5f5; }
+    .label-warning { 
+      color: #dc3545; 
+      animation: flash 1s ease-in-out infinite;
+    }
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .warning-box {
+      background-color: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 4px;
+      padding: 16px;
+      margin: 20px 0;
+      color: #856404;
+    }
+    .warning-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    .warning-box ul {
+      margin: 8px 0 0 0;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Person Record (Output)</h1>
+${warningsHTML}
+  <div class="field">
+    <span class="label">Given Name</span>
+    <span class="value">${escapeHtml(canonical.givenName)}</span>
+  </div>
+
+  <div class="field">
+    <span class="label">Surname</span>
+    <span class="value">${escapeHtml(canonical.surname)}</span>
+  </div>
+
+  <div class="${dobFieldClass}">
+    <span class="${dobLabelClass}">Date of birth</span>
+    <span class="value">${escapeHtml(canonical.dateOfBirth || '(Missing)')}</span>
+  </div>
+
+  <p>Audit: input_hash: <em>sha256:${inputHash}</em> · output_hash: <em>sha256:${outputHash}</em></p>
+  <p>Converter version: <em>${converterVersion}</em></p>
+</body>
+</html>`;
+}
+
+
+// Main application
+
+
+
+/**
+ * This is the main application file that:
+ * 1. Orchestrates the transformation process (parse -> transform -> generate)
+ * 2. Handles the user interface (file upload, display, download)
+ */
+/**
+ * Processes an input HTML file through the complete transformation pipeline.
+ *
+ * The pipeline consists of three steps:
+ * 1. Parse: Extract data from the input HTML
+ * 2. Transform: Convert to canonical format
+ * 3. Generate: Create the output HTML
+ *
+ * @param fileContent - The HTML content of the input file
+ * @returns The transformed HTML content ready to be saved
+ */
+function processInputFile(fileContent) {
+    // Step 1: Parse the input HTML to extract person data
+    const inputData = parseInputHTML(fileContent);
+    // Step 2: Transform the input data into canonical format
+    const canonicalData = transformToCanonical(inputData);
+    // Step 3: Generate the output HTML from the canonical data
+    const outputHTML = generateOutputHTML(canonicalData, fileContent);
+    return outputHTML;
+}
+/**
+ * Initializes the application when the page loads.
+ *
+ * Sets up all the UI event handlers and connects them to the transformation logic.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Get references to all the HTML elements we need
+    const fileInput = document.getElementById('fileInput');
+    const uploadButton = document.getElementById('uploadButton');
+    const outputDiv = document.getElementById('output');
+    const errorDiv = document.getElementById('error');
+    const downloadButton = document.getElementById('downloadButton');
+    // Store the current output HTML so we can download it later
+    let currentOutputHTML = '';
+    // Set up the file upload button
+    uploadButton.addEventListener('click', () => {
+        // Get the file that the user selected
+        const selectedFile = fileInput.files?.[0];
+        // Check if a file was actually selected
+        if (!selectedFile) {
+            errorDiv.textContent = 'Please select a file';
+            errorDiv.classList.add('show');
+            return;
+        }
+        // Create a FileReader to read the file contents
+        // FileReader is a browser API that lets us read files asynchronously
+        const fileReader = new FileReader();
+        // This runs when the file has been successfully read
+        fileReader.onload = (event) => {
+            try {
+                // Get the file content as a string
+                const fileContent = event.target?.result;
+                // Process the file through our transformation pipeline
+                // This does: parse -> transform -> generate
+                const outputHTML = processInputFile(fileContent);
+                // Store the output HTML so we can download it later
+                currentOutputHTML = outputHTML;
+                // Display the output in an iframe so the user can preview it
+                const previewIframe = document.createElement('iframe');
+                previewIframe.className = 'output-preview';
+                // Clear any previous output
+                outputDiv.innerHTML = '';
+                outputDiv.appendChild(previewIframe);
+                // Set the iframe content to our generated HTML
+                // srcdoc lets us set HTML content directly without needing a separate file
+                previewIframe.srcdoc = outputHTML;
+                // Hide any previous errors and show the download button
+                errorDiv.classList.remove('show');
+                downloadButton.style.display = 'block';
+            }
+            catch (error) {
+                // If something goes wrong, show an error message
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                errorDiv.textContent = `Error processing file: ${errorMessage}`;
+                errorDiv.classList.add('show');
+                outputDiv.innerHTML = '';
+                downloadButton.style.display = 'none';
+            }
+        };
+        // This runs if there's an error reading the file
+        fileReader.onerror = () => {
+            errorDiv.textContent = 'Error reading file';
+            errorDiv.classList.add('show');
+        };
+        // Start reading the file as text
+        // This is asynchronous - the onload callback will run when it's done
+        fileReader.readAsText(selectedFile);
+    });
+    // Set up the download button
+    downloadButton.addEventListener('click', () => {
+        // Don't do anything if there's no output to download
+        if (!currentOutputHTML) {
+            return;
+        }
+        // Create a Blob (Binary Large Object) containing the HTML
+        // A Blob represents file-like data in memory
+        const htmlBlob = new Blob([currentOutputHTML], { type: 'text/html' });
+        // Create a temporary URL that points to the blob
+        // This URL can be used like a regular file URL
+        const blobUrl = URL.createObjectURL(htmlBlob);
+        // Create a temporary link element that will trigger the download
+        const downloadLink = document.createElement('a');
+        downloadLink.href = blobUrl;
+        downloadLink.download = 'output.html'; // This tells the browser to download instead of navigate
+        // Add the link to the page, click it (triggers download), then remove it
+        // This is a common technique to trigger file downloads programmatically
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        // Clean up the blob URL to free memory
+        // Important: always revoke blob URLs when you're done with them
+        URL.revokeObjectURL(blobUrl);
+    });
+});
+
+
+  </script>
+</body>
+</html>
