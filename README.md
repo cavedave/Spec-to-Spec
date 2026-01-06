@@ -1,8 +1,14 @@
-# Canonical Model Transformation Architecture
+# Report Converter
 
 ## Intro
 
-This application transforms html from an input HTML format to a canonical (standardised) format. Users can upload HTML files containing a record, and the application will parse, transform, and generate output HTML files in the canonical format.
+This application transforms HTML records from an input format to a canonical (standardised) format. Users can select HTML files containing a record, and the application will automatically parse, transform, and generate output HTML files in the canonical format.
+
+![Main Interface](docs/images/main-ui.png)
+
+The application automatically processes files when selected and provides visual warnings for missing or invalid fields.
+
+![Output with Warnings](docs/images/output-with-warnings.png)
 
 ## File Structure
 
@@ -56,12 +62,12 @@ npm run build:standalone
 ```
 
 This creates a `standalone/` directory containing:
-- `index.html` - All JavaScript and CSS inlined (works offline)
-- `assets/` - Logos and favicon folder
+- `index.html` - **Single file** with all JavaScript, CSS, images, and favicon inlined as base64 (works offline)
 
-**To distribute:** Simply zip the `standalone/` folder and share it. Users can:
+**To distribute:** Simply share the `standalone/index.html` file. Users can:
 - Double-click `index.html` to open it in their browser
 - Or open it directly from the file system (no server needed!)
+- **No additional files or folders required** - everything is in one HTML file!
 
 ## Todo
 
