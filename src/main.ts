@@ -40,7 +40,6 @@ export function processInputFile(fileContent: string): string {
 document.addEventListener('DOMContentLoaded', () => {
   // Get references to all the HTML elements we need
   const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-  const uploadButton = document.getElementById('uploadButton') as HTMLButtonElement;
   const outputDiv = document.getElementById('output') as HTMLDivElement;
   const errorDiv = document.getElementById('error') as HTMLDivElement;
   const downloadButton = document.getElementById('downloadButton') as HTMLButtonElement;
@@ -48,18 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Store the current output HTML so we can download it later
   let currentOutputHTML = '';
   
-  // Set up the file upload button
-  uploadButton.addEventListener('click', () => {
-    // Get the file that the user selected
-    const selectedFile = fileInput.files?.[0];
-    
-    // Check if a file was actually selected
-    if (!selectedFile) {
-      errorDiv.textContent = 'Please select a file';
-      errorDiv.classList.add('show');
-      return;
-    }
-    
+  // Function to process a file
+  function processFile(selectedFile: File) {
     // Create a FileReader to read the file contents
     // FileReader is a browser API that lets us read files asynchronously
     const fileReader = new FileReader();
@@ -111,6 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start reading the file as text
     // This is asynchronous - the onload callback will run when it's done
     fileReader.readAsText(selectedFile);
+  }
+  
+  // Auto-process file when selected
+  fileInput.addEventListener('change', () => {
+    const selectedFile = fileInput.files?.[0];
+    
+    if (selectedFile) {
+      // Clear any previous errors
+      errorDiv.classList.remove('show');
+      processFile(selectedFile);
+    }
   });
   
   // Set up the download button

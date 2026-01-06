@@ -83,8 +83,15 @@ export function generateOutputHTML(
   // Version of the converter (increment this when you make changes)
   const converterVersion = '0.1.0';
   
-  // Check if DOB is missing
+  // Check if fields are missing
+  const isGivenNameMissing = !canonical.givenName || canonical.givenName.trim() === '';
+  const isSurnameMissing = !canonical.surname || canonical.surname.trim() === '';
   const isDobMissing = !canonical.dateOfBirth || canonical.dateOfBirth.trim() === '';
+  
+  const givenNameFieldClass = isGivenNameMissing ? 'field field-warning' : 'field';
+  const givenNameLabelClass = isGivenNameMissing ? 'label label-warning' : 'label';
+  const surnameFieldClass = isSurnameMissing ? 'field field-warning' : 'field';
+  const surnameLabelClass = isSurnameMissing ? 'label label-warning' : 'label';
   const dobFieldClass = isDobMissing ? 'field field-warning' : 'field';
   const dobLabelClass = isDobMissing ? 'label label-warning' : 'label';
   
@@ -144,14 +151,14 @@ export function generateOutputHTML(
 <body>
   <h1>Person Record (Output)</h1>
 ${warningsHTML}
-  <div class="field">
-    <span class="label">Given Name</span>
-    <span class="value">${escapeHtml(canonical.givenName)}</span>
+  <div class="${givenNameFieldClass}">
+    <span class="${givenNameLabelClass}">Given Name</span>
+    <span class="value">${escapeHtml(canonical.givenName || '(Missing)')}</span>
   </div>
 
-  <div class="field">
-    <span class="label">Surname</span>
-    <span class="value">${escapeHtml(canonical.surname)}</span>
+  <div class="${surnameFieldClass}">
+    <span class="${surnameLabelClass}">Surname</span>
+    <span class="value">${escapeHtml(canonical.surname || '(Missing)')}</span>
   </div>
 
   <div class="${dobFieldClass}">

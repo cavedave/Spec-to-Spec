@@ -69,4 +69,5 @@ This creates a `standalone/` directory containing:
 - [ ] Add support for additional input formats
 - [ ] Add validation for input data
 - [ ] Add error handling improvements
-- [ ] Add unit tests 
+- [ ] Add unit tests
+- [ ] Improve file icon for end users' systems (Windows/Linux file manager icons) 

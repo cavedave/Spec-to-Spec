@@ -46,8 +46,39 @@ ${mainJs
 // Read CSS
 const css = fs.readFileSync(path.join(distDir, 'styles.css'), 'utf8');
 
-// Read HTML template
-const htmlTemplate = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+// Convert images to base64 data URIs
+function imageToBase64(imagePath) {
+  const imageBuffer = fs.readFileSync(imagePath);
+  const ext = path.extname(imagePath).toLowerCase();
+  let mimeType;
+  
+  switch(ext) {
+    case '.png':
+      mimeType = 'image/png';
+      break;
+    case '.jpg':
+    case '.jpeg':
+      mimeType = 'image/jpeg';
+      break;
+    case '.gif':
+      mimeType = 'image/gif';
+      break;
+    case '.svg':
+      mimeType = 'image/svg+xml';
+      break;
+    case '.ico':
+      mimeType = 'image/x-icon';
+      break;
+    default:
+      mimeType = 'image/png';
+  }
+  
+  return `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
+}
+
+// Convert favicon and logo to base64
+const faviconBase64 = imageToBase64(path.join(assetsDir, 'favicon.ico'));
+const hopliteLogoBase64 = imageToBase64(path.join(assetsDir, 'logos', 'Hoplite_logo_unoffical.png'));
 
 // Create standalone HTML with everything inlined
 const standaloneHtml = `<!DOCTYPE html>
@@ -55,8 +86,8 @@ const standaloneHtml = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canonical Model Transformation</title>
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <title>Report Converter</title>
+  <link rel="icon" type="image/x-icon" href="${faviconBase64}">
   <style>
 ${css}
   </style>
@@ -65,8 +96,7 @@ ${css}
   <div class="container">
     <header class="header">
       <div class="logo-container">
-        <img src="assets/logos/Hoplite_logo_unoffical.png" alt="Hoplite Logo" class="header-logo">
-        <img src="assets/logos/cci.png" alt="CCI Logo" class="header-logo">
+        <img src="${hopliteLogoBase64}" alt="Hoplite Logo" class="header-logo">
       </div>
       <div class="header-content">
         <h1 class="header-title">Report Converter</h1>
@@ -75,11 +105,10 @@ ${css}
     </header>
     
     <div class="upload-section custom-card">
-      <h2>Upload Input File</h2>
+      <h2>Select Input File</h2>
       <input type="file" id="fileInput" accept=".html,.htm">
       <div style="margin-top: var(--spacing-md);">
-        <button id="uploadButton" class="btn-primary">Process File</button>
-        <button id="downloadButton" class="btn-success" style="display: none; margin-left: var(--spacing-sm);">Download Output</button>
+        <button id="downloadButton" class="btn-success" style="display: none;">Download Output</button>
       </div>
       <div id="error" class="error-message"></div>
     </div>
@@ -93,42 +122,15 @@ ${combinedJs}
 </body>
 </html>`;
 
-// Write standalone HTML
+// Write standalone HTML (single file, no assets folder needed)
 fs.writeFileSync(path.join(standaloneDir, 'index.html'), standaloneHtml);
-
-// Copy assets directory (logos and favicon)
-const copyRecursiveSync = (src, dest) => {
-  const exists = fs.existsSync(src);
-  const stats = exists && fs.statSync(src);
-  const isDirectory = exists && stats.isDirectory();
-  
-  if (isDirectory) {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
-    }
-    fs.readdirSync(src).forEach(childItemName => {
-      copyRecursiveSync(
-        path.join(src, childItemName),
-        path.join(dest, childItemName)
-      );
-    });
-  } else {
-    fs.copyFileSync(src, dest);
-  }
-};
-
-// Copy assets folder
-const standaloneAssetsDir = path.join(standaloneDir, 'assets');
-if (fs.existsSync(assetsDir)) {
-  copyRecursiveSync(assetsDir, standaloneAssetsDir);
-}
 
 console.log('✅ Standalone version built successfully!');
 console.log(`📁 Output directory: ${standaloneDir}`);
 console.log('\nTo use:');
 console.log('  1. Open standalone/index.html in your browser');
 console.log('  2. Or double-click index.html (works on most systems)');
-console.log('\nThe standalone version includes:');
-console.log('  - index.html (all code inlined)');
-console.log('  - assets/ folder (logos and favicon)');
+console.log('\nThe standalone version is a SINGLE FILE:');
+console.log('  - index.html (all code, CSS, images, and favicon inlined as base64)');
+console.log('  - No additional files or folders needed!');
 

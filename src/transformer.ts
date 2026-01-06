@@ -60,6 +60,16 @@ function transformDate(dateStr: string): string {
 export function transformToCanonical(input: InputPerson): CanonicalPerson {
   const warnings: string[] = [];
   
+  // Check if Given Name is missing
+  if (!input.firstName || input.firstName.trim() === '') {
+    warnings.push('Given Name field is missing or could not be parsed from the input.');
+  }
+  
+  // Check if Surname is missing
+  if (!input.familyName || input.familyName.trim() === '') {
+    warnings.push('Surname field is missing or could not be parsed from the input.');
+  }
+  
   // Check if DOB is missing
   if (!input.dob || input.dob.trim() === '') {
     warnings.push('Date of birth (DOB) field is missing or could not be parsed from the input.');
